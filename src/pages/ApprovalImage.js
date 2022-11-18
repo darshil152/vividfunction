@@ -26,31 +26,8 @@ export default function Approval() {
     };
 
 
-
-    // useEffect(() => {
-    // //  fetch('https://node.staging.rentechdigital.com:3500/api/v1/additem')
-    // //   .then((response) => response.json())
-    // //   console.log(response)
-    // //   .then((json) => (json));
-
-    // });
-
-
-    const [ViewModel, setViewModel] = useState(false);
-    const [EditModel, setEditModel] = useState(false);
-    const [DeleteModel, setDeleteModel] = useState(false);
-    const [ProductModel, setProductModel] = useState(false);
-    const [currentId, setCurrentId] = useState('')
-
-
-    const handleDelete = (data) => {
-        console.log('data :: ', data)
-        setCurrentId(data)
-        setDeleteModel(true)
-    }
-
-    const handleviewdata = () => {
-        setViewModel(true)
+    useEffect(() => {
+        setCount((count) => count + 1);
         var data = JSON.stringify({
             "page": 1,
             "limit": 15,
@@ -61,7 +38,7 @@ export default function Approval() {
             method: 'post',
             url: 'https://node.staging.rentechdigital.com:3500/api/v1/displayitem',
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2OTAzNzgsImV4cCI6MTY3MTI4MjM3OH0.ZXG8qNYRWcSuZap5p8qvoZTg-ROw2D176VSXIXGteuc',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2Njg4MDgsImV4cCI6MTY3MTI2MDgwOH0.2V5zH-bCLtfN9_oIWrig1MRzbGs14NLAcHSi9dlNXtk',
                 'Content-Type': 'application/json'
             },
             data: data
@@ -69,15 +46,43 @@ export default function Approval() {
 
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
+                console.log(response.data.data);
+                setUsers(response.data.data)
             })
             .catch(function (error) {
                 console.log(error);
             });
+    }, []);
+
+
+    const [ViewModel, setViewModel] = useState(false);
+    const [EditModel, setEditModel] = useState(false);
+    const [DeleteModel, setDeleteModel] = useState(false);
+    const [ProductModel, setProductModel] = useState(false);
+    const [currentId, setCurrentId] = useState('')
+    const [users, setUsers] = useState([])
+    const [count, setCount] = useState(0);
+
+    //Invoke link when user click
+    const invokebutton = () =>{
+        // window.location.href='https://swipecart-adminpanel.web.app/#/minified:Jr';
+        window.open("https://swipecart-adminpanel.web.app/#/LogInScreen","_blank");
+    }
+
+    // show data when user click
+    const handleviewdata = () => {
+        setViewModel(true)
+    }
+
+
+    //Open form when userclick
+    const showedittform = () => {
+        setEditModel(true)
+
     }
 
     const deleteimage = () => {
-       
+
         var config = {
             method: 'post',
             url: 'https://node.staging.rentechdigital.com:3500/api/v1/deleteitem/' + currentId,
@@ -85,6 +90,7 @@ export default function Approval() {
                 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2OTAzNzgsImV4cCI6MTY3MTI4MjM3OH0.ZXG8qNYRWcSuZap5p8qvoZTg-ROw2D176VSXIXGteuc'
             }
         };
+
 
         axios(config)
             .then(function (response) {
@@ -95,9 +101,44 @@ export default function Approval() {
             .catch(function (error) {
                 console.log(error);
             });
-
-
     }
+
+    //show user data when click
+    const handleproductmodel = () => {
+        setProductModel(true)
+        var data = JSON.stringify({
+            "page": 1,
+            "limit": 15,
+            "search": ""
+        });
+
+        var config = {
+            method: 'post',
+            url: 'https://node.staging.rentechdigital.com:3500/api/v1/displayitem',
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2Njg4MDgsImV4cCI6MTY3MTI2MDgwOH0.2V5zH-bCLtfN9_oIWrig1MRzbGs14NLAcHSi9dlNXtk',
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                setUsers(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+
+    //Open delete model when user click
+    const handleDelete = (data) => {
+        console.log('data :: ', data)
+        setCurrentId(data)
+        setDeleteModel(true)
+    }
+
 
     const makeid = (length) => {
         var result = '';
@@ -394,12 +435,12 @@ export default function Approval() {
                                     <path d="M19 19.5017L13 13.5017M15 8.50171C15 12.3677 11.866 15.5017 8 15.5017C4.13401 15.5017 1 12.3677 1 8.50171C1 4.63572 4.13401 1.50171 8 1.50171C11.866 1.50171 15 4.63572 15 8.50171Z" stroke="#EB5757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </p>
-                            <p className="comn-status-class green-bg-stats" >
+                            <p className="comn-status-class green-bg-stats" onClick={invokebutton}>
                                 <svg width="16" height="16" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.5 16.5024H2.5C1.39543 16.5024 0.5 15.607 0.5 14.5024V3.50244C0.5 2.39787 1.39543 1.50244 2.5 1.50244H6.5V3.50244H2.5V14.5024H13.5V10.5024H15.5V14.5024C15.5 15.607 14.6046 16.5024 13.5 16.5024ZM8.2 10.2094L6.79 8.79544L13.083 2.50244H9.5V0.502441H16.5V7.50244H14.5V3.91744L8.2 10.2094Z" fill="#27AE60" />
                                 </svg>
                             </p>
-                            <p className="comn-status-class sky-bg-stats">
+                            <p className="comn-status-class sky-bg-stats" onClick={handleviewdata}>
                                 <svg width="20" height="20" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 13.5017L5.58579 8.91592C6.36683 8.13487 7.63316 8.13487 8.41421 8.91592L13 13.5017M11 11.5017L12.5858 9.91592C13.3668 9.13487 14.6332 9.13487 15.4142 9.91592L17 11.5017M11 5.50171H11.01M3 17.5017H15C16.1046 17.5017 17 16.6063 17 15.5017V3.50171C17 2.39714 16.1046 1.50171 15 1.50171H3C1.89543 1.50171 1 2.39714 1 3.50171V15.5017C1 16.6063 1.89543 17.5017 3 17.5017Z" stroke="#56CCF2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
@@ -418,13 +459,14 @@ export default function Approval() {
                 customBodyRender: (data, i) => {
                     return (
                         <div className="action-icon-class">
-                            <p className="comn-status-class violet-bg-stats" onClick={() => setProductModel(true)}>
+                            <p className="comn-status-class violet-bg-stats" onClick={handleproductmodel}>
+                                {/*  onClick={() => setProductModel(true)} */}
                                 <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.9998 8.00171C13.9998 9.65856 12.6566 11.0017 10.9998 11.0017C9.3429 11.0017 7.99976 9.65856 7.99976 8.00171C7.99976 6.34485 9.3429 5.00171 10.9998 5.00171C12.6566 5.00171 13.9998 6.34485 13.9998 8.00171Z" stroke="#BB6BD9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M1.45801 8.00168C2.73228 3.94459 6.52257 1.00171 11.0002 1.00171C15.4778 1.00171 19.2681 3.94462 20.5424 8.00175C19.2681 12.0588 15.4778 15.0017 11.0002 15.0017C6.52256 15.0017 2.73226 12.0588 1.45801 8.00168Z" stroke="#BB6BD9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </p>
-                            <p className="comn-status-class blue-bg-stats" onClick={handleviewdata}>
+                            <p className="comn-status-class blue-bg-stats" onClick={showedittform}>
                                 <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10.5858 1.0875C11.3668 0.306447 12.6332 0.306447 13.4142 1.0875C14.1953 1.86854 14.1953 3.13487 13.4142 3.91592L12.6213 4.70882L9.79289 1.88039L10.5858 1.0875Z" fill="#2F80ED" />
                                     <path d="M8.37868 3.2946L0 11.6733V14.5017H2.82842L11.2071 6.12303L8.37868 3.2946Z" fill="#2F80ED" />

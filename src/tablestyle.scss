@@ -17,14 +17,14 @@
   font-size: 15px;
   font-weight: 500;
   padding-right: 50px;
-  color: #1A202C;
+  color: #1a202c;
   border: 1px solid rgba(130, 130, 130, 0.2);
   border-radius: 25px;
   background: rgba(18, 18, 18, 0.5);
 }
 
 .rtd-table-search-btn input:focus {
-  color: #1A202C;
+  color: #1a202c;
   background-color: rgba(18, 18, 18, 0.5);
   border: 1px solid rgba(130, 130, 130, 0.2);
   box-shadow: 0 0 3px #7c64f8;
@@ -39,7 +39,7 @@
 }
 
 .rtd-table-main-div table {
-  color: #1A202C;
+  color: #1a202c;
   border-collapse: separate;
   border-spacing: 0px;
   border-radius: 10px;
@@ -55,7 +55,7 @@
   text-transform: capitalize;
   font-weight: 500 !important;
   font-size: 15px;
-  color: #6A6E83;
+  color: #6a6e83;
   padding: 16px;
   white-space: nowrap;
   border-bottom: 0;
@@ -93,15 +93,15 @@
 }
 
 .pagination-custom-info .page-item.active .page-link {
-  color: #27AE60;
+  color: #27ae60;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 100px;
-  background-color: #EAF7F0 !important;
-  border: 1px solid #27AE60 !important;
+  background-color: #eaf7f0 !important;
+  border: 1px solid #27ae60 !important;
 }
 
 .pagination-custom-info .page-item {
@@ -110,7 +110,7 @@
   width: 40px;
   height: 40px;
   border-radius: 100px;
-  border: 1px solid #BDBDBD;
+  border: 1px solid #bdbdbd;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,15 +123,15 @@
 
 .pagination-custom-info .page-link {
   border-radius: 100px;
-  border: 1px solid #27AE60 !important;
-  color: #BDBDBD;
+  border: 1px solid #27ae60 !important;
+  color: #bdbdbd;
   border: none !important;
   background-color: transparent !important;
   box-shadow: none !important;
 }
 
 .pagination-custom-info .page-link:hover {
-  color: #27AE60;
+  color: #27ae60;
 }
 
 .pagination-custom-info {
@@ -164,7 +164,7 @@
 .product-txt p {
   font-weight: 500;
   font-size: 16px;
-  color: #1A202C;
+  color: #1a202c;
   margin-bottom: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -185,35 +185,34 @@
 }
 
 .comn-status-class.red-bg-stats {
-  color: #EB5757;
+  color: #eb5757;
   background: rgba(235, 87, 87, 0.1);
 }
 
 .comn-status-class.green-bg-stats {
-  color: #27AE60;
+  color: #27ae60;
   background: rgba(39, 174, 96, 0.2);
 }
 
 .comn-status-class.yellow-bg-stats {
-  color: #1A202C;
+  color: #1a202c;
   background: rgba(242, 201, 76, 0.4);
 }
 
 .comn-status-class.sky-bg-stats {
-  color: #56CCF2;
+  color: #56ccf2;
   background: #56ccf21a;
 }
 
 .comn-status-class.violet-bg-stats {
-  color: #BB6BD9;
+  color: #bb6bd9;
   background: #bb6bd91a;
 }
 
 .comn-status-class.blue-bg-stats {
-  color: #2F80ED;
+  color: #2f80ed;
   background: #3182ed1a;
 }
-
 
 .comn-active-class {
   position: absolute;
@@ -226,19 +225,19 @@
 }
 
 .comn-active-class.red-active {
-  background: #EB5757;
+  background: #eb5757;
 }
 
 .comn-active-class.green-active {
-  background: #27AE60;
+  background: #27ae60;
 }
 
 .comn-active-class.orange-active {
-  background: #F2994A;
+  background: #f2994a;
 }
 
 .comn-active-class.blue-active {
-  background: #2F80ED;
+  background: #2f80ed;
 }
 
 .img-name-tag {
@@ -270,9 +269,8 @@
 
 .previous-btn,
 .next-btn {
-  border: 1px solid #56CCF2 !important;
+  border: 1px solid #56ccf2 !important;
 }
-
 
 .rtd-table-main-div table tbody tr td:nth-child(2) {
   max-width: 300px;
@@ -293,4 +291,8 @@
 ul.pagination {
   display: flex;
   justify-content: center;
+}
+
+.modal-content {
+  margin-top: 150px;
 }
