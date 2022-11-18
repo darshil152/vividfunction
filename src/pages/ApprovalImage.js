@@ -19,15 +19,26 @@ export default function Approval() {
 
     const [value, setvalue] = useState('');
     const [apiData, setApidata] = useState([]);
+    const [ViewModel, setViewModel] = useState(false);
+    const [EditModel, setEditModel] = useState(false);
+    const [DeleteModel, setDeleteModel] = useState(false);
+    const [ProductModel, setProductModel] = useState(false);
+    const [currentId, setCurrentId] = useState('')
+    const [users, setUsers] = useState([])
+    const [count, setCount] = useState(0);
 
 
-    const handleOnchange = (val) => {
-        setvalue(val);
-    };
+ 
 
-
+    
     useEffect(() => {
-        setCount((count) => count + 1);
+      
+getDisplayData();
+      
+    }, []);
+
+    const getDisplayData=()=>{
+        console.log('first')
         var data = JSON.stringify({
             "page": 1,
             "limit": 15,
@@ -46,22 +57,20 @@ export default function Approval() {
 
         axios(config)
             .then(function (response) {
-                console.log(response.data.data);
-                setUsers(response.data.data)
+                console.log(response.data.data.userall);
+                setUsers(response.data.data.userall)
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }, []);
+    }
+    
 
 
-    const [ViewModel, setViewModel] = useState(false);
-    const [EditModel, setEditModel] = useState(false);
-    const [DeleteModel, setDeleteModel] = useState(false);
-    const [ProductModel, setProductModel] = useState(false);
-    const [currentId, setCurrentId] = useState('')
-    const [users, setUsers] = useState([])
-    const [count, setCount] = useState(0);
+    const handleOnchange = (val) => {
+        setvalue(val);
+    };
+
 
     //Invoke link when user click
     const invokebutton = () =>{
@@ -95,7 +104,7 @@ export default function Approval() {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                getData()
+                getDisplayData()
                 setDeleteModel(false)
             })
             .catch(function (error) {
@@ -106,29 +115,29 @@ export default function Approval() {
     //show user data when click
     const handleproductmodel = () => {
         setProductModel(true)
-        var data = JSON.stringify({
-            "page": 1,
-            "limit": 15,
-            "search": ""
-        });
+        // var data = JSON.stringify({
+        //     "page": 1,
+        //     "limit": 15,
+        //     "search": ""
+        // });
 
-        var config = {
-            method: 'post',
-            url: 'https://node.staging.rentechdigital.com:3500/api/v1/displayitem',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2Njg4MDgsImV4cCI6MTY3MTI2MDgwOH0.2V5zH-bCLtfN9_oIWrig1MRzbGs14NLAcHSi9dlNXtk',
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                setUsers(response.data)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        // var config = {
+        //     method: 'post',
+        //     url: 'https://node.staging.rentechdigital.com:3500/api/v1/displayitem',
+        //     headers: {
+        //         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2Njg4MDgsImV4cCI6MTY3MTI2MDgwOH0.2V5zH-bCLtfN9_oIWrig1MRzbGs14NLAcHSi9dlNXtk',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     data: data
+        // };
+        // axios(config)
+        //     .then(function (response) {
+        //         console.log(JSON.stringify(response.data.data.userall));
+        //         setUsers(response.data.data.userall)
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
     }
 
 
@@ -459,7 +468,7 @@ export default function Approval() {
                 customBodyRender: (data, i) => {
                     return (
                         <div className="action-icon-class">
-                            <p className="comn-status-class violet-bg-stats" onClick={handleproductmodel}>
+                            <p className="comn-status-class violet-bg-stats" onClick={()=>handleproductmodel}>
                                 {/*  onClick={() => setProductModel(true)} */}
                                 <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.9998 8.00171C13.9998 9.65856 12.6566 11.0017 10.9998 11.0017C9.3429 11.0017 7.99976 9.65856 7.99976 8.00171C7.99976 6.34485 9.3429 5.00171 10.9998 5.00171C12.6566 5.00171 13.9998 6.34485 13.9998 8.00171Z" stroke="#BB6BD9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -546,7 +555,7 @@ export default function Approval() {
                             <div className="col-12 mt-3">
                                 <div className="comn-table-black-bg">
                                     <div className="mt-3">
-                                        <RtdDatatable option={option} data={apiData} columns={columns} tableCallBack={tableCallBack} />
+                                        <RtdDatatable option={option} data={users} columns={columns} tableCallBack={tableCallBack} />
                                     </div>
                                 </div>
                             </div>
