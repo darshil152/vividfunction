@@ -17,28 +17,23 @@ const options = [
 
 export default function Approval() {
 
+
+
     const [value, setvalue] = useState('');
     const [apiData, setApidata] = useState([]);
     const [ViewModel, setViewModel] = useState(false);
     const [EditModel, setEditModel] = useState(false);
     const [DeleteModel, setDeleteModel] = useState(false);
     const [ProductModel, setProductModel] = useState(false);
-    const [currentId, setCurrentId] = useState('')
-    const [users, setUsers] = useState([])
-    const [count, setCount] = useState(0);
+    const [currentId, setCurrentId] = useState('');
+    const [users, setUsers] = useState([]);
+    const [iduser, setIduser] = useState([]);
 
-
- 
-
-    
     useEffect(() => {
-      
-getDisplayData();
-      
+        getDisplayData();
     }, []);
 
-    const getDisplayData=()=>{
-        console.log('first')
+    const getDisplayData = () => {
         var data = JSON.stringify({
             "page": 1,
             "limit": 15,
@@ -64,7 +59,7 @@ getDisplayData();
                 console.log(error);
             });
     }
-    
+
 
 
     const handleOnchange = (val) => {
@@ -73,9 +68,9 @@ getDisplayData();
 
 
     //Invoke link when user click
-    const invokebutton = () =>{
+    const invokebutton = () => {
         // window.location.href='https://swipecart-adminpanel.web.app/#/minified:Jr';
-        window.open("https://swipecart-adminpanel.web.app/#/LogInScreen","_blank");
+        window.open("https://swipecart-adminpanel.web.app/#/LogInScreen", "_blank");
     }
 
     // show data when user click
@@ -91,7 +86,6 @@ getDisplayData();
     }
 
     const deleteimage = () => {
-
         var config = {
             method: 'post',
             url: 'https://node.staging.rentechdigital.com:3500/api/v1/deleteitem/' + currentId,
@@ -115,29 +109,29 @@ getDisplayData();
     //show user data when click
     const handleproductmodel = () => {
         setProductModel(true)
-        // var data = JSON.stringify({
-        //     "page": 1,
-        //     "limit": 15,
-        //     "search": ""
-        // });
+        var data = {
+            "_id": "63608d30bc521aebee9c155e"
+        };
 
-        // var config = {
-        //     method: 'post',
-        //     url: 'https://node.staging.rentechdigital.com:3500/api/v1/displayitem',
-        //     headers: {
-        //         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2Njg4MDgsImV4cCI6MTY3MTI2MDgwOH0.2V5zH-bCLtfN9_oIWrig1MRzbGs14NLAcHSi9dlNXtk',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     data: data
-        // };
-        // axios(config)
-        //     .then(function (response) {
-        //         console.log(JSON.stringify(response.data.data.userall));
-        //         setUsers(response.data.data.userall)
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
+        var config = {
+            method: 'post',
+            url: 'https://node.staging.rentechdigital.com:3500/api/v1/getItem',
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NjkwMTA5NjEsImV4cCI6MTY3MTYwMjk2MX0.qYiXeYQT80emfb0u3-HzNmjwHjIogmO9yGfk44F3VwQ',
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(response.data.data);
+                setIduser(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
 
@@ -158,7 +152,6 @@ getDisplayData();
         }
         return result;
     }
-
 
 
     const getData = () => {
@@ -347,7 +340,7 @@ getDisplayData();
                 sort: true,
                 setCellProps: () => ({ className: "text-center" }),
                 customBodyRender: (data, i) => {
-                    console.log('dta2555 :: ', data)
+                    // console.log('dta2555 :: ', data)
                     return (
                         <div className="product-txt">
                             <p title="Kingdom king palace shiva Kingdom king palace shiva">{data[i].product.title}</p>
@@ -468,7 +461,7 @@ getDisplayData();
                 customBodyRender: (data, i) => {
                     return (
                         <div className="action-icon-class">
-                            <p className="comn-status-class violet-bg-stats" onClick={()=>handleproductmodel}>
+                            <p className="comn-status-class violet-bg-stats" onClick={handleproductmodel}>
                                 {/*  onClick={() => setProductModel(true)} */}
                                 <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.9998 8.00171C13.9998 9.65856 12.6566 11.0017 10.9998 11.0017C9.3429 11.0017 7.99976 9.65856 7.99976 8.00171C7.99976 6.34485 9.3429 5.00171 10.9998 5.00171C12.6566 5.00171 13.9998 6.34485 13.9998 8.00171Z" stroke="#BB6BD9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -612,7 +605,7 @@ getDisplayData();
                                                         className="form-control login-comn-input"
                                                         name="title"
                                                         placeholder="Image Title"
-                                                    />
+                                                        onChange={event => console.log("onchange is triggered")} />
                                                 </div>
                                             </div>
                                             <div className="col-12 mt-2">
