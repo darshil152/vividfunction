@@ -7,7 +7,9 @@ import MultiSelect from 'react-multiple-select-dropdown-lite';
 import 'react-multiple-select-dropdown-lite/dist/index.css';
 import axios from "axios";
 
+
 import ModalImg from "../images/modal-full-img.png";
+// import { isHtmlElement } from "react-router-dom/dist/dom";
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -16,8 +18,6 @@ const options = [
 ];
 
 export default function Approval() {
-
-
 
     const [value, setvalue] = useState('');
     const [apiData, setApidata] = useState([]);
@@ -29,6 +29,7 @@ export default function Approval() {
     const [users, setUsers] = useState([]);
     const [iduser, setIduser] = useState([]);
 
+ 
     useEffect(() => {
         getDisplayData();
     }, []);
@@ -59,8 +60,6 @@ export default function Approval() {
                 console.log(error);
             });
     }
-
-
 
     const handleOnchange = (val) => {
         setvalue(val);
@@ -107,30 +106,39 @@ export default function Approval() {
     }
 
     //show user data when click
-    const handleproductmodel = () => {
+    const handleproductmodel = (data) => {
+
         setProductModel(true)
-        var data = {
-            "_id": "63608d30bc521aebee9c155e"
-        };
 
-        var config = {
-            method: 'post',
-            url: 'https://node.staging.rentechdigital.com:3500/api/v1/getItem',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NjkwMTA5NjEsImV4cCI6MTY3MTYwMjk2MX0.qYiXeYQT80emfb0u3-HzNmjwHjIogmO9yGfk44F3VwQ',
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
+        // fetch('https://node.staging.rentechdigital.com:3500/api/v1/getItem')
+        // .then(response=>response.json())
+        // .then(res=>setIduser(res))
 
-        axios(config)
-            .then(function (response) {
-                console.log(response.data.data);
-                setIduser(response.data.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+
+        console.log("data::", data)
+
+        // var data = {
+        //     "_id": "6360f634c98cf60c26b3d9b1"
+        // };
+        // var config = {
+        //     method: 'post',
+        //     url: 'https://node.staging.rentechdigital.com:3500/api/v1/getItem',
+        //     headers: {
+        //         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NjkwMTA5NjEsImV4cCI6MTY3MTYwMjk2MX0.qYiXeYQT80emfb0u3-HzNmjwHjIogmO9yGfk44F3VwQ',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     data: data
+        // };
+
+
+        // axios(config)
+        //     .then(function (response) {
+        //         console.log(response.data.data);
+        //         setIduser(response.data.data);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
 
     }
 
@@ -209,7 +217,7 @@ export default function Approval() {
     }
 
     const [option, set_option] = useState({
-        sizePerPage: 10,
+        sizePerPage: 15,
         search: "",
         selectableRows: true,
         totalRecord: 100,
@@ -461,7 +469,7 @@ export default function Approval() {
                 customBodyRender: (data, i) => {
                     return (
                         <div className="action-icon-class">
-                            <p className="comn-status-class violet-bg-stats" onClick={handleproductmodel}>
+                            <p className="comn-status-class violet-bg-stats" onClick={() => handleproductmodel(data[i])}>
                                 {/*  onClick={() => setProductModel(true)} */}
                                 <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.9998 8.00171C13.9998 9.65856 12.6566 11.0017 10.9998 11.0017C9.3429 11.0017 7.99976 9.65856 7.99976 8.00171C7.99976 6.34485 9.3429 5.00171 10.9998 5.00171C12.6566 5.00171 13.9998 6.34485 13.9998 8.00171Z" stroke="#BB6BD9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -480,6 +488,8 @@ export default function Approval() {
                                 </svg>
 
                             </p>
+
+
                         </div>
                     );
                 },
@@ -487,13 +497,9 @@ export default function Approval() {
         },
     ];
 
-
     const tableCallBack = (option) => {
         set_option(option);
     };
-
-
-
 
 
     return (
@@ -791,10 +797,13 @@ export default function Approval() {
 
             {/* ========== Kingdom King Palace Shiva Modal =============  */}
 
+
+
             <Modal show={ProductModel} onHide={() => setProductModel(false)} size="lg" className="product-modal" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header className="px-5" closeButton>
                     <h4>Kingdom King Palace Shiva</h4>
                 </Modal.Header>
+
                 <Modal.Body className="px-5 pt-0">
                     <div className="modal-data">
                         <p className="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,</p>
@@ -902,3 +911,5 @@ export default function Approval() {
         </>
     )
 }
+
+
