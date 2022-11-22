@@ -29,7 +29,7 @@ export default function Approval() {
     const [users, setUsers] = useState([]);
     const [iduser, setIduser] = useState([]);
 
- 
+
     useEffect(() => {
         getDisplayData();
     }, []);
@@ -116,7 +116,7 @@ export default function Approval() {
 
 
         console.log("data::", data)
-
+        setIduser(data);
         // var data = {
         //     "_id": "6360f634c98cf60c26b3d9b1"
         // };
@@ -134,7 +134,7 @@ export default function Approval() {
         // axios(config)
         //     .then(function (response) {
         //         console.log(response.data.data);
-        //         setIduser(response.data.data);
+        //         
         //     })
         //     .catch(function (error) {
         //         console.log(error);
@@ -799,17 +799,17 @@ export default function Approval() {
 
 
 
-            <Modal show={ProductModel} onHide={() => setProductModel(false)} size="lg" className="product-modal" aria-labelledby="contained-modal-title-vcenter" centered>
+            {ProductModel && <Modal show={ProductModel} onHide={() => setProductModel(false)} size="lg" className="product-modal" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header className="px-5" closeButton>
-                    <h4>Kingdom King Palace Shiva</h4>
+                    <h4>{iduser.product.title}</h4>
+                    <h4>{iduser.id}</h4>
                 </Modal.Header>
 
                 <Modal.Body className="px-5 pt-0">
                     <div className="modal-data">
-                        <p className="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,</p>
+                        <p className="mb-0">{iduser.product.description}</p>
                         <div>
-                            <span>Created at: 10 October, 4:05 PM</span>
-                            <span className="ms-3">Updated at: 10 October, 4:05 PM</span>
+                            <span className="ms-3">{iduser.updatedAt}</span>
                         </div>
                     </div>
                     <div className="row">
@@ -817,22 +817,19 @@ export default function Approval() {
                             <div>
                                 <div className="product-modal-detail mb-3">
                                     <div className="w-150"><span>Meta</span></div>
-                                    <div><p className="fw-bold">Kingdom King Palace Shiva</p></div>
+                                    <div><p className="fw-bold">{iduser.meta.title}</p></div>
                                 </div>
                                 <div className="product-modal-detail mb-3">
                                     <div className="w-150"><span>Meta Description</span></div>
-                                    <div className="modal-data ps-3"><p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a</p></div>
+                                    <div className="modal-data ps-3"><p>{iduser.meta.metaDescription}</p></div>
                                 </div>
                                 <div className="product-modal-detail mb-3">
                                     <div className="w-150"><span>Meta Keyword</span></div>
                                     <div>
                                         <p className="img-name-tag">
                                             <div className="d-flex flex-wrap">
-                                                <span className="comn-status-class red-bg-stats">God</span>
-                                                <span className="comn-status-class red-bg-stats">Kailash</span>
-                                                <span className="comn-status-class red-bg-stats">Tridev</span>
-                                                <span className="comn-status-class red-bg-stats">shiva</span>
-                                                <span className="comn-status-class red-bg-stats">Parvati</span>
+                                                <span className="comn-status-class red-bg-stats">{iduser.meta.keyword}</span>
+
                                             </div>
                                         </p>
                                     </div>
@@ -842,11 +839,11 @@ export default function Approval() {
                                     <div>
                                         <p className="d-flex align-items-center">
                                             <div className="position-relative">
-                                                <span className="comn-status-class green-bg-stats">SEO: Approved</span>
+                                                <span className="comn-status-class green-bg-stats">{iduser.status.seo}</span>
                                                 <bdi className="comn-active-class green-active"></bdi>
                                             </div>
                                             <div className="position-relative ms-2">
-                                                <span className="comn-status-class yellow-txt yellow-bg-stats">UI: In Progress</span>
+                                                <span className="comn-status-class yellow-txt yellow-bg-stats">{iduser.status.ui}</span>
                                                 <bdi className="comn-active-class orange-active"></bdi>
                                             </div>
                                         </p>
@@ -857,11 +854,8 @@ export default function Approval() {
                                     <div>
                                         <p className="img-name-tag">
                                             <div className="d-flex flex-wrap">
-                                                <span className="comn-status-class red-bg-stats">God</span>
-                                                <span className="comn-status-class red-bg-stats">Kailash</span>
-                                                <span className="comn-status-class red-bg-stats">Tridev</span>
-                                                <span className="comn-status-class red-bg-stats">shiva</span>
-                                                <span className="comn-status-class red-bg-stats">Parvati</span>
+                                                <span className="comn-status-class red-bg-stats">{iduser.collections.tag}</span>
+
                                             </div>
                                         </p>
                                     </div>
@@ -869,7 +863,7 @@ export default function Approval() {
                                 <div className="product-modal-detail mb-3">
                                     <div className="w-150"><span>Category</span></div>
                                     <div className="ps-1">
-                                        <p>God</p>
+                                        <p>{iduser.collections.category}</p>
                                     </div>
                                 </div>
                                 <div className="product-modal-detail mb-3">
@@ -878,7 +872,7 @@ export default function Approval() {
                                         <div className="row">
                                             <div className="col-lg-6">
                                                 <p className="d-flex link-div position-relative">
-                                                    <span>https://Swipecart.com</span>
+                                                    <a href="https://swipecart-adminpanel.web.app/#/LogInScreen">https://Swipecart.com</a>
                                                     <div className="action-icon-class link-position">
                                                         <p className="comn-status-class green-bg-stats">
                                                             <svg width="16" height="16" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -890,7 +884,7 @@ export default function Approval() {
                                             </div>
                                             <div className="col-lg-6 mt-3 mt-lg-0">
                                                 <p className="d-flex link-div-blue position-relative ms-2">
-                                                    <span>https://Swipecart.com</span>
+                                                    <a href="https://swipecart-adminpanel.web.app/#/LogInScreen">https://Swipecart.com</a>
                                                     <div className="action-icon-class link-position">
                                                         <p className="comn-status-class sky-bg-stats">
                                                             <svg width="20" height="20" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -907,7 +901,7 @@ export default function Approval() {
                         </div>
                     </div>
                 </Modal.Body>
-            </Modal>
+            </Modal>}
         </>
     )
 }
