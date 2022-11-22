@@ -31,13 +31,13 @@ export default function Approval() {
 
 
     useEffect(() => {
-        getDisplayData();
+        getDisplayData(1);
     }, []);
 
-    const getDisplayData = () => {
+    const getDisplayData = (no) => {
         var data = JSON.stringify({
-            "page": 1,
-            "limit": 15,
+            "page": no,
+            "limit": 10,
             "search": ""
         });
 
@@ -497,8 +497,8 @@ export default function Approval() {
         },
     ];
 
-    const tableCallBack = (option) => {
-        set_option(option);
+    const tableCallBack = (no) => {
+        getDisplayData(no.page + 1)
     };
 
 
