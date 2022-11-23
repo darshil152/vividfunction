@@ -6,10 +6,7 @@ import UploadImg from "../images/cloud-img.svg";
 import MultiSelect from 'react-multiple-select-dropdown-lite';
 import 'react-multiple-select-dropdown-lite/dist/index.css';
 import axios from "axios";
-
-
 import ModalImg from "../images/modal-full-img.png";
-// import { isHtmlElement } from "react-router-dom/dist/dom";
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -17,7 +14,22 @@ const options = [
     { value: 'vanilla', label: 'Vanilla' },
 ];
 
+
 export default function Approval() {
+
+
+    const [producttitle, setProductTitle] = useState('')
+    const [productdescription, setProductDescription] = useState('')
+    const [metatitle, setMetatitle] = useState('')
+    const [metadescription, setMetaDescription] = useState('')
+    const [metakeyword, setMetaKeyword] = useState('')
+    const [stausseo, setStausseo] = useState('')
+    const [stausui, setStausui] = useState('')
+    const [collectionstags, setColletiontags] = useState('')
+    const [collectionscategory, setColletionCategory] = useState('')
+    const [linksreference, setLinksreference] = useState('')
+    const [linksimage, setLinksimage] = useState('')
+    const[image,setimage] = useState('')
 
     const [value, setvalue] = useState('');
     const [apiData, setApidata] = useState([]);
@@ -28,7 +40,7 @@ export default function Approval() {
     const [currentId, setCurrentId] = useState('');
     const [users, setUsers] = useState([]);
     const [iduser, setIduser] = useState([]);
-
+    // const [editdata, setEditdata] = useState([])
 
     useEffect(() => {
         getDisplayData(1);
@@ -61,6 +73,16 @@ export default function Approval() {
             });
     }
 
+    const updateuser = () => {
+        console.log(producttitle)
+        console.log(productdescription)
+        console.log(metatitle)
+        console.log(metadescription)
+        console.log(linksreference)
+        console.log(linksimage)
+        console.log(image)
+    }
+
     const handleOnchange = (val) => {
         setvalue(val);
     };
@@ -79,9 +101,9 @@ export default function Approval() {
 
 
     //Open form when userclick
-    const showedittform = () => {
+    const showedittform = (data) => {
         setEditModel(true)
-
+        console.log(data)
     }
 
     const deleteimage = () => {
@@ -166,11 +188,11 @@ export default function Approval() {
         var data = JSON.stringify({
             "product": {
                 "title": "product",
-                "description": "new product is here"
+                "description": "new product is here  new product is here new product is herenew product is here"
             },
             "meta": {
                 "title": "product",
-                "metaDescription": "product description here",
+                "metaDescription": "product description here new product is herenew product is herenew product is here",
                 "keyword": [
                     "god",
                     "kailash"
@@ -476,7 +498,7 @@ export default function Approval() {
                                     <path d="M1.45801 8.00168C2.73228 3.94459 6.52257 1.00171 11.0002 1.00171C15.4778 1.00171 19.2681 3.94462 20.5424 8.00175C19.2681 12.0588 15.4778 15.0017 11.0002 15.0017C6.52256 15.0017 2.73226 12.0588 1.45801 8.00168Z" stroke="#BB6BD9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </p>
-                            <p className="comn-status-class blue-bg-stats" onClick={showedittform}>
+                            <p className="comn-status-class blue-bg-stats" onClick={() => showedittform(data[i])}>
                                 <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10.5858 1.0875C11.3668 0.306447 12.6332 0.306447 13.4142 1.0875C14.1953 1.86854 14.1953 3.13487 13.4142 3.91592L12.6213 4.70882L9.79289 1.88039L10.5858 1.0875Z" fill="#2F80ED" />
                                     <path d="M8.37868 3.2946L0 11.6733V14.5017H2.82842L11.2071 6.12303L8.37868 3.2946Z" fill="#2F80ED" />
@@ -588,7 +610,7 @@ export default function Approval() {
                                     <button className="comn-btn-class cancle-btn-class w-100 me-2" type="submit" >
                                         Cancel
                                     </button>
-                                    <button className="comn-btn-class green-bg-btn  w-100 ms-2" type="submit">
+                                    <button className="comn-btn-class green-bg-btn  w-100 ms-2" type="submit" onClick={updateuser}>
                                         Save
                                     </button>
                                 </div>
@@ -606,12 +628,13 @@ export default function Approval() {
                                                         Title
                                                     </label>
                                                     <input
-
                                                         type="text"
                                                         className="form-control login-comn-input"
                                                         name="title"
-                                                        placeholder="Image Title"
-                                                        onChange={event => console.log("onchange is triggered")} />
+                                                        onChange={e => setProductTitle(e.target.value)}
+                                                        value={producttitle}
+                                                        placeholder="Image Title" />
+
                                                 </div>
                                             </div>
                                             <div className="col-12 mt-2">
@@ -620,6 +643,8 @@ export default function Approval() {
                                                         Description
                                                     </label>
                                                     <textarea
+                                                        onChange={e => setProductDescription(e.target.value)}
+                                                        value={productdescription}
                                                         type="text"
                                                         rows={3}
                                                         className="form-control login-comn-input pt-2 h-100"
@@ -638,6 +663,8 @@ export default function Approval() {
                                                         Title
                                                     </label>
                                                     <input
+                                                        onChange={e => setMetatitle(e.target.value)}
+                                                        value={metatitle}
                                                         type="text"
                                                         className="form-control login-comn-input"
                                                         name="title"
@@ -651,6 +678,8 @@ export default function Approval() {
                                                         Description
                                                     </label>
                                                     <textarea
+                                                        onChange={e => setMetaDescription(e.target.value)}
+                                                        value={metadescription}
                                                         type="text"
                                                         rows={3}
                                                         className="form-control login-comn-input pt-2 h-100"
@@ -731,6 +760,8 @@ export default function Approval() {
                                                         Reference link
                                                     </label>
                                                     <input
+                                                        onChange={e => setLinksreference(e.target.value)}
+                                                        value={linksreference}
                                                         type="text"
                                                         className="form-control login-comn-input"
                                                         placeholder="http://abc.xyz"
@@ -743,6 +774,8 @@ export default function Approval() {
                                                     Image link
                                                 </label>
                                                 <input
+                                                    onChange={e => setLinksimage(e.target.value)}
+                                                    value={linksimage}
                                                     type="text"
                                                     className="form-control login-comn-input"
                                                     placeholder="http://abc.xyz"
@@ -760,7 +793,7 @@ export default function Approval() {
                                         <label htmlFor="file-upload">
                                             <span type="btn">Choose File</span>
                                         </label>
-                                        <input id="file-upload" accept="image/*" name="upload_offer_img" type="file" className="d-none" />
+                                        <input id="file-upload" accept="image/*" name="upload_offer_img" type="file" className="d-none" value={image} onChange={e => setimage(e.target.value)}/>
                                     </div>
                                 </div>
                             </div>
