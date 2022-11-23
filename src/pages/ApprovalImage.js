@@ -7,13 +7,13 @@ import MultiSelect from 'react-multiple-select-dropdown-lite';
 import 'react-multiple-select-dropdown-lite/dist/index.css';
 import axios from "axios";
 import ModalImg from "../images/modal-full-img.png";
+import { exportData } from "../const";
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
 ];
-
 
 export default function Approval() {
 
@@ -23,13 +23,13 @@ export default function Approval() {
     const [metatitle, setMetatitle] = useState('')
     const [metadescription, setMetaDescription] = useState('')
     const [metakeyword, setMetaKeyword] = useState('')
-    const [stausseo, setStausseo] = useState('')
-    const [stausui, setStausui] = useState('')
+    // const [stausseo, setStausseo] = useState('')
+    // const [stausui, setStausui] = useState('')
     const [collectionstags, setColletiontags] = useState('')
     const [collectionscategory, setColletionCategory] = useState('')
     const [linksreference, setLinksreference] = useState('')
     const [linksimage, setLinksimage] = useState('')
-    const[image,setimage] = useState('')
+    const [image, setimage] = useState('')
 
     const [value, setvalue] = useState('');
     const [apiData, setApidata] = useState([]);
@@ -40,7 +40,7 @@ export default function Approval() {
     const [currentId, setCurrentId] = useState('');
     const [users, setUsers] = useState([]);
     const [iduser, setIduser] = useState([]);
-    // const [editdata, setEditdata] = useState([])
+    const [editid, setEditid] = useState('')
 
     useEffect(() => {
         getDisplayData(1);
@@ -57,7 +57,7 @@ export default function Approval() {
             method: 'post',
             url: 'https://node.staging.rentechdigital.com:3500/api/v1/displayitem',
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg2Njg4MDgsImV4cCI6MTY3MTI2MDgwOH0.2V5zH-bCLtfN9_oIWrig1MRzbGs14NLAcHSi9dlNXtk',
+                'Authorization': exportData.token,
                 'Content-Type': 'application/json'
             },
             data: data
@@ -74,13 +74,56 @@ export default function Approval() {
     }
 
     const updateuser = () => {
-        console.log(producttitle)
-        console.log(productdescription)
-        console.log(metatitle)
-        console.log(metadescription)
-        console.log(linksreference)
-        console.log(linksimage)
-        console.log(image)
+        var data = JSON.stringify({
+            "product": {
+                setProductTitle: producttitle,
+                setProductDescription: productdescription
+            },
+            "meta": {
+                setMetatitle: metatitle,
+                setMetaDescription: metadescription,
+                setMetaKeyword: [
+                    metakeyword
+                ]
+            },
+            "status": {
+                "seo": "open",
+                "ui": "Raw"
+            },
+            "collections": {
+                collectionstags: [
+                    setColletiontags
+                ],
+                collectionscategory: [
+                    setColletionCategory
+                ]
+            },
+            "link": {
+                setLinksimage: linksimage,
+                setLinksreference: linksreference,
+            }
+        });
+        console.log("adasdasd", editid)
+        var config = {
+            method: 'post',
+            url: 'https://node.staging.rentechdigital.com:3500/api/v1/updateitem/' + editid,
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NjkyMDkxMTIsImV4cCI6MTY3MTgwMTExMn0.wjrHAl2oMyUxkiynSRSNm_q568qG9TGrH1LbKPkLeBI',
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                // ViewModel
+                getDisplayData(1);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
     const handleOnchange = (val) => {
@@ -102,8 +145,22 @@ export default function Approval() {
 
     //Open form when userclick
     const showedittform = (data) => {
+
         setEditModel(true)
         console.log(data)
+        console.log(data.id)
+        setProductTitle(data.product.title)
+        setProductDescription(data.product.description)
+        setMetatitle(data.meta.title)
+        setMetaDescription(data.meta.metaDescription)
+        setMetaKeyword(data.product.keyword)
+        setColletiontags(data.collections.tags)
+        setColletionCategory(data.collections.category)
+        setLinksreference(data.link.ref_link)
+        setLinksimage(data.links.image_link)
+        // setimage()
+        setEditid(data.id)
+
     }
 
     const deleteimage = () => {
@@ -119,7 +176,7 @@ export default function Approval() {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                getDisplayData()
+                getDisplayData(1)
                 setDeleteModel(false)
             })
             .catch(function (error) {
@@ -733,7 +790,7 @@ export default function Approval() {
                                                         Tags
                                                     </label>
                                                     <MultiSelect
-                                                        onChange={handleOnchange}
+                                                        // onChange={handleOnchange}
                                                         className="form-control login-comn-input"
                                                         options={options}
                                                     />
@@ -743,6 +800,8 @@ export default function Approval() {
                                                         Category
                                                     </label>
                                                     <input
+                                                        onChange={e => setColletionCategory(e.target.value)}
+                                                        value={collectionscategory}
                                                         type="text"
                                                         className="form-control login-comn-input"
                                                         placeholder="Image Title"
@@ -793,7 +852,7 @@ export default function Approval() {
                                         <label htmlFor="file-upload">
                                             <span type="btn">Choose File</span>
                                         </label>
-                                        <input id="file-upload" accept="image/*" name="upload_offer_img" type="file" className="d-none" value={image} onChange={e => setimage(e.target.value)}/>
+                                        <input id="file-upload" accept="image/*" name="upload_offer_img" type="file" className="d-none" value={image} onChange={e => setimage(e.target.value)} />
                                     </div>
                                 </div>
                             </div>

@@ -23,7 +23,7 @@ export default function Login(params) {
             "password": formData.password
         })
             .then(function (response) {
-                console.log(response,"res");
+                console.log(response, "res");
                 window.location.href = "./approval"
             })
             .catch(function (error) {
