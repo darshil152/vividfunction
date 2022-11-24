@@ -5,9 +5,10 @@ import RtdDatatable from "../component/DataTable/RtdDatatable";
 import UploadImg from "../images/cloud-img.svg";
 import MultiSelect from 'react-multiple-select-dropdown-lite';
 import 'react-multiple-select-dropdown-lite/dist/index.css';
-import axios from "axios";
+import axios, { Axios } from "axios";
 import ModalImg from "../images/modal-full-img.png";
 import { exportData } from "../const";
+// import Select from 'react-select';
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -15,8 +16,18 @@ const options = [
     { value: 'vanilla', label: 'Vanilla' },
 ];
 
-export default function Approval() {
+// const options = [
+//     { label: " God ", value: " god" },
+//     { label: "Kailash ", value: "Kailash" },
+//     { label: "Tridev ", value: "Tridev" },
+//     { label: "shiva ", value: "shiva" },
+//     { label: "Parvati ", value: "Parvati" },
+//     { label: "Parvati ", value: "Parvati" },
+//     { label: "Strawberry ", value: "strawberry",}
+//   ];
 
+
+export default function Approval() {
 
     const [producttitle, setProductTitle] = useState('')
     const [productdescription, setProductDescription] = useState('')
@@ -28,7 +39,7 @@ export default function Approval() {
     const [collectionstags, setColletiontags] = useState('')
     const [collectionscategory, setColletionCategory] = useState('')
     const [linksreference, setLinksreference] = useState('')
-    const [linksimage, setLinksimage] = useState('')
+    const [linkofimage, setLinksimage] = useState('')
     const [image, setimage] = useState('')
 
     const [value, setvalue] = useState('');
@@ -40,15 +51,17 @@ export default function Approval() {
     const [currentId, setCurrentId] = useState('');
     const [users, setUsers] = useState([]);
     const [iduser, setIduser] = useState([]);
-    const [editid, setEditid] = useState('')
+    const [editid, setEditid] = useState('');
+    // const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
-        getDisplayData(1);
+        getDisplayData();
     }, []);
 
-    const getDisplayData = (no) => {
+
+    const getDisplayData = () => {
         var data = JSON.stringify({
-            "page": no,
+            "page": 1,
             "limit": 10,
             "search": ""
         });
@@ -76,13 +89,13 @@ export default function Approval() {
     const updateuser = () => {
         var data = JSON.stringify({
             "product": {
-                setProductTitle: producttitle,
-                setProductDescription: productdescription
+                "title": producttitle,
+                "description": productdescription
             },
             "meta": {
-                setMetatitle: metatitle,
-                setMetaDescription: metadescription,
-                setMetaKeyword: [
+                "title": metatitle,
+                "metaDescription": metadescription,
+                "setMetaKeyword": [
                     metakeyword
                 ]
             },
@@ -91,19 +104,20 @@ export default function Approval() {
                 "ui": "Raw"
             },
             "collections": {
-                collectionstags: [
-                    setColletiontags
+                "collectionstags": [
+                    collectionstags
                 ],
-                collectionscategory: [
-                    setColletionCategory
+                "collectionscategory": [
+                    collectionscategory
                 ]
             },
             "link": {
-                setLinksimage: linksimage,
-                setLinksreference: linksreference,
+                "image_link": linkofimage,
+                "ref_link": linksreference,
             }
         });
         console.log("adasdasd", editid)
+
         var config = {
             method: 'post',
             url: 'https://node.staging.rentechdigital.com:3500/api/v1/updateitem/' + editid,
@@ -117,10 +131,11 @@ export default function Approval() {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
-                // ViewModel
-                getDisplayData(1);
+                setEditModel(false)
+                getDisplayData();
             })
             .catch(function (error) {
+
                 console.log(error);
             });
 
@@ -149,6 +164,7 @@ export default function Approval() {
         setEditModel(true)
         console.log(data)
         console.log(data.id)
+        setEditid(data.id)
         setProductTitle(data.product.title)
         setProductDescription(data.product.description)
         setMetatitle(data.meta.title)
@@ -157,10 +173,8 @@ export default function Approval() {
         setColletiontags(data.collections.tags)
         setColletionCategory(data.collections.category)
         setLinksreference(data.link.ref_link)
-        setLinksimage(data.links.image_link)
+        setLinksimage(data.link.image_link)
         // setimage()
-        setEditid(data.id)
-
     }
 
     const deleteimage = () => {
@@ -292,7 +306,6 @@ export default function Approval() {
             .catch(function (error) {
                 console.log(error);
             });
-
     }
 
     const [option, set_option] = useState({
@@ -657,7 +670,7 @@ export default function Approval() {
 
             <Modal show={EditModel} onHide={() => setEditModel(false)} size="xl" className="edit-modal-style" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header className="px-sm-5" closeButton>
-                    <h4>Edit the Image</h4>
+                    <h4>Edi the images</h4>
                 </Modal.Header>
                 <Modal.Body className="px-sm-5 pt-0">
                     <div className="row">
@@ -790,7 +803,7 @@ export default function Approval() {
                                                         Tags
                                                     </label>
                                                     <MultiSelect
-                                                        // onChange={handleOnchange}
+                                                        onChange={handleOnchange}
                                                         className="form-control login-comn-input"
                                                         options={options}
                                                     />
@@ -833,8 +846,8 @@ export default function Approval() {
                                                     Image link
                                                 </label>
                                                 <input
-                                                    onChange={e => setLinksimage(e.target.value)}
-                                                    value={linksimage}
+                                                    onChange={(e => setLinksimage(e.target.value))}
+                                                    value={linkofimage}
                                                     type="text"
                                                     className="form-control login-comn-input"
                                                     placeholder="http://abc.xyz"
@@ -844,7 +857,7 @@ export default function Approval() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row">
+                            {/* <div className="row">
                                 <div className="col-12 mt-3">
                                     <div className="offer-bg-select p-3">
                                         <img src={UploadImg} alt="Upload File" className="img-fluid" />
@@ -855,7 +868,7 @@ export default function Approval() {
                                         <input id="file-upload" accept="image/*" name="upload_offer_img" type="file" className="d-none" value={image} onChange={e => setimage(e.target.value)} />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 

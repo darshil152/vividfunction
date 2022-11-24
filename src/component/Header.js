@@ -12,6 +12,7 @@ export default function Header(params) {
     document.getElementById('user-detail').classList.toggle('active-user-info');
   };
 
+
   return (
     <>
       <header className="header-top-section">

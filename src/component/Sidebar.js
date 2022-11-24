@@ -10,7 +10,7 @@ export default function Sidebar(params) {
     const sidebar_change = (name) => {
         if (name) {
             navigate(name);
-            document.getElementById('root').classList.remove('dash-main-class-add');
+          //document.getElementById('root').classList.remove('dash-main-class-add');
         }
     };
 
@@ -18,7 +18,6 @@ export default function Sidebar(params) {
     //     window.location.href.lastIndexOf('/') + 1
     // );
 
-    
 
     return (
         <React.Fragment>
